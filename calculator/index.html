@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buni Boosting | Calculator</title>
+  <link rel="stylesheet" href="../assets/styles.css" />
+</head>
+<body>
+
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="bg-lines" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true"></div>
+
+
+  <header class="site-header">
+    <div class="nav-shell glass">
+      <a class="brand" href="../" aria-label="Buni Boosting home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Buni Boosting</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="../">Home</a>
+        <a href="../calculator/" class="active" aria-current="page">Calculator</a>
+        <a href="../pricing/">Pricing</a>
+        <a href="../faq/">FAQ</a>
+        <a href="../discord/">Discord</a>
+      </nav>
+
+      <a class="nav-cta" href="../calculator/">Start Order</a>
+    </div>
+  </header>
+
+
+  <main id="top">
+    <section class="page-hero">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot" aria-hidden="true"></span>
+              <span>Build your full Rocket League boost order.</span>
+            </div>
+            <h1 style="max-width:none;">Calculator</h1>
+            <p>
+              Configure your mode, rank path, boosting method, tournament wins, and rewards in one place.
+              Every order shows the exact breakdown before checkout.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" style="padding-top:0;">
+      <div class="container">
+        <div class="calculator-shell">
+          <section class="panel glass">
+            <div class="panel-title">
+              <div>
+                <h3>Configure your order</h3>
+                <p>
+                  Standard rank orders, SSL MMR pushes, and tournament wins all use their own rules so the total stays consistent.
+                </p>
+              </div>
+              <div class="chip">Rank Caps • Rewards • Tournaments</div>
+            </div>
+
+            <form id="orderForm" class="field-grid" novalidate>
+              <div class="field">
+                <label for="mode">Gamemode</label>
+                <select id="mode" class="native-select" name="mode">
+                  <option value="1v1">1v1</option>
+                  <option value="2v2">2v2</option>
+                  <option value="3v3">3v3</option>
+                  <option value="4v4">4v4</option>
+                  <option value="heatseeker">heatseeker</option>
+                  <option value="rumble">rumble</option>
+                  <option value="snowday">snowday</option>
+                  <option value="tournament">tournament</option>
+                </select>
+                <div class="custom-select" data-for="mode" data-label="Gamemode" data-icon="RL"></div>
+              </div>
+
+              <div class="field">
+                <label>Boost method</label>
+                <div class="segmented" role="group" aria-label="Boost type">
+                  <button type="button" class="boost-toggle active" data-value="solo">Solo Boost</button>
+                  <button type="button" class="boost-toggle" data-value="duo">Duo Boost</button>
+                </div>
+              </div>
+
+              <input type="hidden" id="boostType" value="solo" />
+
+              <div class="field full-width hidden" id="regionWrap">
+                <label for="region">Duo region</label>
+                <select id="region" class="native-select" name="region">
+                  <option value="">Select your region</option>
+                  <option value="NA">NA</option>
+                  <option value="EU">EU</option>
+                  <option value="OCE">OCE</option>
+                  <option value="MENA">MENA</option>
+                  <option value="SAM">SAM</option>
+                  <option value="APAC">APAC</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="custom-select" data-for="region" data-label="Region" data-icon="RG"></div>
+                <p class="hint" id="regionHint">
+                  Duo boosting requires a region. Standard duo costs more than solo, and tournament duo uses stronger pricing.
+                </p>
+              </div>
+
+              <div class="field full-width hidden" id="tournamentOptionWrap">
+                <label for="tournamentOption">Tournament order</label>
+                <select id="tournamentOption" class="native-select" name="tournamentOption"></select>
+                <div class="custom-select" data-for="tournamentOption" data-label="Tournament Order" data-icon="TW"></div>
+                <p class="hint">Tournament orders use dedicated pricing instead of current-rank to desired-rank progression.</p>
+              </div>
+
+              <div class="field" id="currentRankWrap">
+                <label for="currentRank">Current rank</label>
+                <select id="currentRank" class="native-select" name="currentRank"></select>
+                <div class="custom-select" data-for="currentRank" data-label="Current Rank" data-icon="CR"></div>
+              </div>
+
+              <div class="field" id="desiredRankWrap">
+                <label for="desiredRank">Desired rank</label>
+                <select id="desiredRank" class="native-select" name="desiredRank"></select>
+                <div class="custom-select" data-for="desiredRank" data-label="Desired Rank" data-icon="DR"></div>
+              </div>
+
+              <div class="field full-width hidden" id="mmrWrap">
+                <label>SSL MMR target</label>
+                <div class="field-grid">
+                  <div class="field">
+                    <input type="number" id="currentMmr" min="1875" max="2200" step="1" placeholder="Current MMR" />
+                  </div>
+                  <div class="field">
+                    <input type="number" id="desiredMmr" min="1876" max="2200" step="1" placeholder="Desired MMR" />
+                  </div>
+                </div>
+                <p class="hint" id="mmrHint">Enter your current and desired MMR inside the SSL range for the selected mode.</p>
+              </div>
+
+              <div class="field full-width" id="rewardWrap">
+                <label>Season rewards</label>
+                <button type="button" id="rewardToggle" class="reward-toggle">
+                  <span class="reward-left">
+                    <span class="reward-icon">SR</span>
+                    <span class="reward-text">
+                      <strong id="rewardTitle">Season Rewards Unavailable</strong>
+                      <span id="rewardSubtext">Reach at least Grand Champion 1 to add rewards.</span>
+                    </span>
+                  </span>
+                  <span class="reward-switch" aria-hidden="true"></span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="panel glass">
+            <div class="summary-header">
+              <div>
+                <div class="summary-label">Live order summary</div>
+                <p class="muted">Only the details used by your order are shown below.</p>
+              </div>
+              <div class="live-dot" aria-hidden="true"></div>
+            </div>
+
+            <div id="summaryContent" class="summary-block"></div>
+
+            <div class="price-strip">
+              <div class="price-box">
+                <span>Estimated delivery</span>
+                <strong id="deliveryValue">--</strong>
+              </div>
+              <div class="price-box">
+                <span>Final total</span>
+                <strong id="priceValue">$0.00</strong>
+              </div>
+            </div>
+
+            <button id="placeOrderBtn" class="btn btn-primary place-order-btn" type="button">Place Order</button>
+            <p id="validationMessage" class="validation-message"></p>
+            <p class="micro-note">Place Order opens a full checkout preview. Nothing gets submitted from this page.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Pricing breakdown</h2>
+            <p>
+              Standard boosting uses a progressive tier path, SSL pushes use MMR-based pricing, tournament wins use a separate ladder,
+              and duo pricing adjusts by region.
+            </p>
+          </div>
+        </div>
+
+        <div class="cards-3">
+          <article class="info-card glass">
+            <div class="info-icon">01</div>
+            <h4>Tier-by-tier pricing</h4>
+            <p>
+              Standard orders add up every rank tier crossed from your current rank to your target rank.
+              Bronze 1 to SSL totals exactly $100, while GC1 to SSL totals exactly $40.
+            </p>
+          </article>
+
+          <article class="info-card glass">
+            <div class="info-icon">02</div>
+            <h4>Mode and duo rules</h4>
+            <ul>
+              <li>1v1, 4v4, heatseeker, and rumble cost 25% extra.</li>
+              <li>Standard duo is +20% in NA and +30% outside NA.</li>
+              <li>Tournament duo is +50% in NA and +100% outside NA.</li>
+            </ul>
+          </article>
+
+          <article class="info-card glass">
+            <div class="info-icon">03</div>
+            <h4>Rewards and delivery</h4>
+            <p>
+              Rewards are detected automatically from your target when enabled. Delivery estimates scale by rank band,
+              MMR gain, or tournament package, and duo doubles the expected time.
+            </p>
+          </article>
+        </div>
+
+        <div class="trust-strip">
+          <div class="trust-pill glass">
+            <strong>No Bots</strong>
+            Only real players handle orders.
+          </div>
+          <div class="trust-pill glass">
+            <strong>No DDOS</strong>
+            Orders are completed cleanly.
+          </div>
+          <div class="trust-pill glass">
+            <strong>No Win Trading</strong>
+            No fake or manipulated match results.
+          </div>
+          <div class="trust-pill glass">
+            <strong>200+ Boosts</strong>
+            Completed with 0 bans on record.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal-card glass" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Checkout Preview</h3>
+          <p>Review the exact order details that apply to this build.</p>
+        </div>
+        <button type="button" class="icon-btn" id="closeModalBtn" aria-label="Close checkout preview">✕</button>
+      </div>
+      <div id="modalSummary" class="modal-summary"></div>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="container footer-shell">
+      <span>Buni Boosting</span>
+      <span>Rocket League boosting with rank orders, tournament wins, SSL pushes, and clear checkout previews.</span>
+    </div>
+  </footer>
+
+
+  <script src="../assets/calculator.js"></script>
+
+</body>
+</html>
