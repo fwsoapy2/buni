@@ -1,0 +1,13 @@
+{
+  "name": "buni-boosting-multipage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-page Express version of the Buni Boosting website.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
